@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static dk.kea.security.entity.Role.USER;
+
 /**
  * Service class responsible for managing operations related to users.
  * This service provides methods for retrieving, updating, creating, and deleting user information.
@@ -104,7 +106,7 @@ public class UserService {
         if(userRepository.findByEmail(user.getEmail()) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         };
-
+        user.addRole(USER);
         userRepository.save(user);
         return new UserResponse(user);
     }
